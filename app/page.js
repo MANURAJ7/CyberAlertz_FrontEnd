@@ -17,6 +17,8 @@ import {
 import { useRouter } from "next/navigation";
 import FooterComponent from "./Custom_Components/FooterComponent";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import Logo from "./public/Logo.gif";
 
 const Home = () => {
   const router = useRouter();
@@ -64,6 +66,13 @@ const Home = () => {
       } min-h-screen`}
     >
       <section id="slider" className="py-16">
+        <Image
+          alt="Logo..."
+          className="mx-auto"
+          src={Logo}
+          width={300}
+          height={200}
+        ></Image>
         <p className="px-52 text-4xl font-bold mb-6">Hot Newz</p>
         <Carousel className="w-3/4 mx-auto">
           <CarouselContent>

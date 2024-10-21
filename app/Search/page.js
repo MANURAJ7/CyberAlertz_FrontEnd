@@ -11,8 +11,10 @@ import {
 } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { cn } from "../../lib/utils";
+import { useRouter } from "next/navigation";
 
 export default function Search() {
+  const router = useRouter();
   const [articles, setArticles] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(true);
@@ -34,6 +36,10 @@ export default function Search() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCardClick = (articleId) => {
+    router.push(`/Article/${articleId}`);
   };
 
   return (
@@ -61,7 +67,10 @@ export default function Search() {
           ) : (
             articles.map((article, index) => (
               <div>
-                <Card className="cursor-pointer border-0 bg-gray-900 mt-4 hover:shadow-cyan-500 hover:shadow">
+                <Card
+                  onClick={() => handleCardClick(article._id)}
+                  className="cursor-pointer border-0 bg-gray-900 mt-4 hover:shadow-cyan-500 hover:shadow"
+                >
                   <CardHeader className="">
                     <CardTitle className="text-gray-200">
                       {article.headline}

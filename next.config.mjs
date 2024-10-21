@@ -6,6 +6,7 @@ const nextConfig = {
     NEXT_ENVIRONMENT_ID: process.env.ENVIRONMENT_ID,
     NEXT_GET_ARTICLE: process.env.GET_ARTICLE,
     NEXT_VECTOR_SEARCH_API: process.env.VECTOR_SEARCH_API,
+    NEXT_GEMINI_KEY: process.env.GEMINI_KEY,
   },
 };
 

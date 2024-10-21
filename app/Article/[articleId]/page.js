@@ -11,8 +11,6 @@ import {
 } from "../../../components/ui/card";
 import { Textarea } from "../../../components/ui/textarea";
 import { cn } from "../../../lib/utils";
-import { Input } from "../../../components/ui/input";
-import { Search } from "lucide-react";
 import {
   Tabs,
   TabsContent,
@@ -24,7 +22,7 @@ import FooterComponent from "../../Custom_Components/FooterComponent";
 const Article = ({ params }) => {
   const [article, setArticle] = useState({});
   const [prompt, setPrompt] = useState("");
-  const [resp, setResp] = useState("");
+  const [resp, setResp] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,9 +44,31 @@ const Article = ({ params }) => {
     getArticle();
   }, []);
 
-  function fetchAI() {
-    console.log(prompt);
+  async function fetchAI() {
+    let finalPrompt = `In the scope of the following article : ${article.description}, answer the following prompt : ${prompt}.`;
     setPrompt("");
+    try {
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          body: finalPrompt,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.status === "ok") setResp(data.output);
+      } else {
+        console.error("Error fetching AI response:", response.statusText);
+        setResp("An error occurred while processing your request.");
+      }
+    } catch (err) {
+      console.log("error while fetch prompt response: ", err);
+      setResp("An error occurred while processing your request.");
+    }
   }
 
   if (loading)
